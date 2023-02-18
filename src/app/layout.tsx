@@ -1,4 +1,7 @@
 import "../styles/globals.css";
+import { ChainId, ThirdwebProvider } from "@thirdweb-dev/react";
+
+const activeChainId = ChainId.Rinkeby;
 
 export default function RootLayout({
   children,
@@ -7,7 +10,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ThirdwebProvider desiredChainId={activeChainId}>
+          {children}
+        </ThirdwebProvider>
+      </body>
     </html>
   );
 }
