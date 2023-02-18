@@ -1,6 +1,13 @@
+"use client";
+
 import Image from "next/image";
+import { useAddress, useDisconnect, useMetamask } from "@thirdweb-dev/react";
 
 export default function NFTDropPage() {
+  const connectWithMetamask = useMetamask();
+  const address = useAddress();
+  const disconnect = useDisconnect();
+
   return (
     <div className="flex flex-col h-screen lg:grid lg:grid-cols-10">
       <div className="bg-gradient-to-br from-cyan-800 to-rose-500 lg:col-span-4">
@@ -30,14 +37,22 @@ export default function NFTDropPage() {
             </span>{" "}
             NFT Marketplace
           </h1>
-          <button className="rounded-full bg-rose-400 text-white p-4 py-2 text-xs font-bold lg:px-5 lg:py-3 lg:text-base">
-            Sign In
+          <button
+            onClick={() => (address ? disconnect() : connectWithMetamask())}
+            className="rounded-full bg-rose-400 hover:bg-rose-500 text-white p-4 py-2.5 text-xs font-bold lg:px-5 lg:py-3 lg:text-base">
+            {address ? "Sign Out" : "Sign In"}
           </button>
         </header>
 
         <hr className="my-2 border" />
+        {address && (
+          <p className="text-center text font-medium text-rose-400">
+            You`re logged in with wallet {address.substring(0, 5)}...
+            {address.substring(address.length - 5)}
+          </p>
+        )}
 
-        <div className="mt-10 flex flex-1 flex-col items-center space-y-6 text-center lg:space-y-0 lg:justify-center">
+        <div className="mt-10 flex flex-1 flex-col items-center text-center lg:justify-center">
           <img
             className="w-80 object-cover pb-10 lg:h-60"
             src="/nftcollection.jpg"
@@ -49,7 +64,7 @@ export default function NFTDropPage() {
           <p className="pt-2 text-xl text-rose-400">13 / 21 NFTs claimed</p>
         </div>
 
-        <button className="h-16 w-full text-white rounded-full bg-rose-500 font-bold">
+        <button className="h-16 w-full text-white rounded-full bg-rose-500 font-bold hover:scale-[1.01] duration-300">
           Mint NFT (0.01 ETH)
         </button>
       </div>
