@@ -8,7 +8,7 @@ type Props = {
 
 export default function Provider({ children }: Props) {
   return (
-    <ThirdwebProvider desiredChainId={ChainId.Goerli}>
+    <ThirdwebProvider activeChain={ChainId.Goerli}>
       {children}
     </ThirdwebProvider>
   );
